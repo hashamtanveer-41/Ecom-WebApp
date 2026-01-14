@@ -1,5 +1,6 @@
 package org.hashlearning.ecomwebapp.service;
 
+import jakarta.transaction.Transactional;
 import org.hashlearning.ecomwebapp.model.Order;
 import org.hashlearning.ecomwebapp.model.OrderItem;
 import org.hashlearning.ecomwebapp.model.Product;
@@ -31,7 +32,7 @@ public class OrderService {
 
         // Creating order and assigning the values to it
         Order order = new Order();
-        String id = UUID.randomUUID().toString().substring(0,8).toUpperCase();
+        String id = "ORD"+UUID.randomUUID().toString().substring(0,8).toUpperCase();
         order.setOrderId(id);
         order.setOrderDate(LocalDate.now());
         order.setStatus("Placed");
@@ -90,6 +91,7 @@ public class OrderService {
         return orderResponse;
     }
 
+    @Transactional
     public List<OrderResponse> getAllOrderResponses() {
         List<Order> orders = orderRepo.findAll();
         List<OrderResponse> orderResponses = new ArrayList<>();
