@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table( name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -16,8 +17,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private String customerName;
+    @Column(unique = true)
     private String orderId;
     private String email;
     private String status;

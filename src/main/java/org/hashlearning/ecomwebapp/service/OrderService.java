@@ -45,7 +45,7 @@ public class OrderService {
         for (OrderItemRequest itemRequest: orderRequest.items()){
 
             // Checking for the product
-            Product product = productRepo.findById(itemRequest.productid())
+            Product product = productRepo.findById(itemRequest.productId())
                     .orElseThrow(()->new RuntimeException("Product not found"));
             // Deducting the stock
             product.setStockQuantity(product.getStockQuantity()-itemRequest.quantity());
