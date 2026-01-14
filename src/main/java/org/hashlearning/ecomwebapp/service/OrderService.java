@@ -28,6 +28,7 @@ public class OrderService {
     private OrderRepo orderRepo;
 
     // Function to place the order
+    @Transactional
     public OrderResponse placeOrder(OrderRequest orderRequest) {
 
         // Creating order and assigning the values to it
@@ -46,8 +47,7 @@ public class OrderService {
         for (OrderItemRequest itemRequest: orderRequest.items()){
 
             // Checking for the product
-            Product product = productRepo.findById(itemRequest.productId())
-                    .orElseThrow(()->new RuntimeException("Product not found"));
+            Product  product= productRepo.findById(itemRequest.productId()).orElseThrow(()->new RuntimeException("Product not found"));
             // Deducting the stock
             product.setStockQuantity(product.getStockQuantity()-itemRequest.quantity());
             // Updating the database
