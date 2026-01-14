@@ -1,5 +1,6 @@
 package org.hashlearning.ecomwebapp.service;
 
+import jakarta.transaction.Transactional;
 import org.hashlearning.ecomwebapp.model.Product;
 import org.hashlearning.ecomwebapp.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,24 @@ public class ProductService {
         return repo.findById(id).orElse(new Product(-1));
     }
 
-    public Product addProduct(Product data, MultipartFile image) throws IOException {
+    public Product addOrUpdateProduct(Product data, MultipartFile image) throws IOException {
         data.setImageName(image.getOriginalFilename());
         data.setImageType(image.getContentType());
             data.setImageData(image.getBytes());
 
         return repo.save(data);
+    }
+
+    public Product getImageDataById(int imageId) {
+        return repo.findImageDataById(imageId);
+    }
+
+    public Object deleteProductById(int imageId) {
+        repo.deleteById(imageId);
+        return repo;
+    }
+
+    public List<Product> getAllProductsByKeyword(String keyword) {
+        return repo.searchProduct(keyword);
     }
 }
